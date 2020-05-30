@@ -11,26 +11,12 @@ class NaiveDense:
         self.activation = activation
 
         w_shape = (input_size, output_size)
-        # (2,3)
-
         w_initial_value = tf.random.uniform(w_shape, minval=0, maxval=1e-1)
-        # tf.Tensor(
-        # [[0.01800234 0.0264619  0.08320428]
-        # [0.06735289 0.08069873 0.02565409]], shape=(2, 3), dtype=float32)
-
         self.W = tf.Variable(w_initial_value)
-        # tf.Variable 'Variable:0' shape=(2, 3) dtype=float32, numpy=
-        # array([[0.02179157, 0.04815897, 0.02990031],
-        #     [0.01661453, 0.08813614, 0.09748103]], dtype=float32)>
 
         b_shape = (output_size,)
-        # (3,)
-
         b_initial_value = tf.zeros(b_shape)
-        # tf.Tensor([0. 0. 0.], shape=(3,), dtype=float32)
-
         self.b = tf.Variable(b_initial_value)
-        # <tf.Variable 'Variable:0' shape=(3,) dtype=float32, numpy=array([0., 0., 0.], dtype=float32)>
 
     def __call__(self, inputs):
         return self.activation(tf.matmul(inputs, self.W) + self.b)
@@ -38,10 +24,6 @@ class NaiveDense:
     @property
     def weights(self):
         return [self.W, self.b]
-
-    # [<tf.Variable 'Variable:0' shape=(2, 3) dtype=float32, numpy=
-    #     array([[0.0920585 , 0.08967658, 0.01914843],
-    #    [0.01162399, 0.04173064, 0.07235775]], dtype=float32)>, <tf.Variable 'Variable:0' shape=(3,) dtype=float32, numpy=array([0., 0., 0.], dtype=float32)>]
 
 
 class NaiveSequential:
@@ -70,7 +52,6 @@ model = NaiveSequential(
         NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax),
     ],
 )
-
 assert len(model.weights) == 4
 
 
@@ -134,4 +115,4 @@ predictions = model(test_images)
 predictions = predictions.numpy()
 predicted_labels = np.argmax(predictions, axis=1)
 matches = predicted_labels == test_labels
-print("accuracy: %.2f" % np.mean(matches))
+print(f"accuracy is {np.mean(matches)}")
