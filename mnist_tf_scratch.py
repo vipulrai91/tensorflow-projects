@@ -79,7 +79,7 @@ LEARNING_RATE = 1e-3
 #         w.assign_sub(w * LEARNING_RATE)
 
 
-optimizer = optimizers.SGD(learning_rate=1e-3)
+optimizer = optimizers.SGD(learning_rate=LEARNING_RATE)
 
 
 def update_weights(gradients, weights):
@@ -116,7 +116,7 @@ train_images = train_images.astype("float32") / 255
 test_images = test_images.reshape((10000, 28 * 28))
 test_images = test_images.astype("float32") / 255
 
-fit(model, train_images, train_labels, epochs=1, batch_size=128)
+fit(model, train_images, train_labels, epochs=10, batch_size=128)
 
 
 predictions = model(test_images)
