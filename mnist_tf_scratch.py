@@ -1,9 +1,10 @@
 # A dense layer implements the following input transformations  w, b - model parameters
 # activation is elementwise function (relu, last layer  will be softmax)
 
-import tensorflow as tf
-from tensorflow.keras.datasets import mnist
 import numpy as np
+import tensorflow as tf
+from tensorflow.keras import optimizers
+from tensorflow.keras.datasets import mnist
 
 
 class NaiveDense:
@@ -72,10 +73,17 @@ class BatchGenerator:
 LEARNING_RATE = 1e-3
 
 
+# def update_weights(gradients, weights):
+#     "We can also use optimizer from keras"
+#     for g, w in zip(gradients, model.weights):
+#         w.assign_sub(w * LEARNING_RATE)
+
+
+optimizer = optimizers.SGD(learning_rate=1e-3)
+
+
 def update_weights(gradients, weights):
-    "We can also use optimizer from keras"
-    for g, w in zip(gradients, model.weights):
-        w.assign_sub(w * LEARNING_RATE)
+    optimizer.apply_gradients(zip(gradients, weights))
 
 
 def one_training_step(model, images_batch, labels_batch):
@@ -108,11 +116,11 @@ train_images = train_images.astype("float32") / 255
 test_images = test_images.reshape((10000, 28 * 28))
 test_images = test_images.astype("float32") / 255
 
-fit(model, train_images, train_labels, epochs=3, batch_size=128)
+fit(model, train_images, train_labels, epochs=1, batch_size=128)
 
 
 predictions = model(test_images)
 predictions = predictions.numpy()
 predicted_labels = np.argmax(predictions, axis=1)
 matches = predicted_labels == test_labels
-print(f"accuracy is {np.mean(matches)}")
+print(f"accuracy is {np.average(matches)}")
