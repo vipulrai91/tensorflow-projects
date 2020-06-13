@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+Sign-Language-Digits-Dataset/
+
 *.h5
 .vscode/
 # C extensions
