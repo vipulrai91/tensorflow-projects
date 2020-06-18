@@ -5,6 +5,7 @@ __pycache__/
 
 Sign-Language-Digits-Dataset/
 
+models/
 *.h5
 .vscode/
 # C extensions
